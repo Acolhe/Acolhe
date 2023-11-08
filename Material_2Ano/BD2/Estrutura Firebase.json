@@ -1,0 +1,35 @@
+{
+  "frases": {
+    "-NhyAe4Dz5YfvijlS02O": {
+      "dataCriacao": "October 29, 2023",
+      "frase": "Frase motivacional prontinha saindo do forno agora!"
+    }
+  },
+  "missoes": {
+    "-Ni7B7Ba9HwXfX1ggiWa": {
+      "descricao": "Missao bacana para ser concluida",
+      "key": "-Ni7B7Ba9HwXfX1ggiWa",
+      "nome": "Missao Legal 1",
+      "usuarios": [
+        1,
+        23,
+        11,
+        17
+      ],
+      "valor": 85
+    },
+    "-Ni7B7BcRxuy8g2l3M3A": {
+      "descricao": "Missao bacana para ser concluida",
+      "key": "-Ni7B7BcRxuy8g2l3M3A",
+      "nome": "Missao Legal 2",
+      "usuarios": [
+        1,
+        23,
+        11,
+        0,
+        17
+      ],
+      "valor": 19
+    }
+  }
+}
