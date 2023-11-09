@@ -1,0 +1,159 @@
+/* LogicoAcolhe: */
+
+CREATE TABLE tbHUMOR (
+    codHumor SERIAL PRIMARY KEY,
+    codUsuario SERIAL,
+    dataAvaliacao DATE,
+    nivelSatisfacao SMALLINT,
+    comentario VARCHAR(125)
+);
+
+CREATE TABLE tbUSUARIO (
+    codUsuario SERIAL PRIMARY KEY,
+    nmUsuario VARCHAR(50),
+    saldo INT,
+    diasConsecutivos INT,
+    email VARCHAR(50) UNIQUE,
+    senha VARCHAR(50),
+    codImgPerfil SERIAL,
+    codSkinPrincipal SERIAL,
+    dataCadastro TIMESTAMP,
+    dataUltimoAcesso DATE,
+    premium BOOL
+);
+
+CREATE TABLE tbSKIN (
+    codSkin SERIAL PRIMARY KEY,
+    nmSkin VARCHAR(50),
+    descricao VARCHAR(80),
+    imagem TEXT,
+    valor INT
+);
+
+CREATE TABLE tbCLINICA (
+    codClinica SERIAL PRIMARY KEY,
+    nmClinica VARCHAR(50),
+    email VARCHAR(50),
+    telefone VARCHAR(50),
+    descricao VARCHAR(300),
+    imagem TEXT,
+    bairro VARCHAR(50),
+    cidade VARCHAR(50),
+    nmEstado VARCHAR(50),
+    sgEstado VARCHAR(2),
+    patrocinada BOOL,
+    nivelSatisfacao INT,
+    UNIQUE (email, telefone)
+);
+
+CREATE TABLE tbUSUARIOCLINICA (
+    codUsuarioClinica SERIAL PRIMARY KEY,
+    codClinica SERIAL,
+    codUsuario SERIAL,
+    nivelSatisfacao SMALLINT,
+    comentario VARCHAR(300),
+    dataAvaliacao TIMESTAMP
+);
+
+CREATE TABLE tbCOMPRASKIN (
+    codCompraSkin SERIAL PRIMARY KEY,
+    codUsuario SERIAL,
+    codSkin SERIAL,
+    valor INT
+);
+
+CREATE TABLE tbPERFIL (
+    codImgPerfil SERIAL PRIMARY KEY,
+    nmImgPerfil VARCHAR(50),
+    descricao VARCHAR(80),
+    imagem TEXT,
+    valor INT
+);
+
+CREATE TABLE tbCOMPRAPERFIL (
+    codCompraPerfil SERIAL PRIMARY KEY,
+    codImgPefil SERIAL,
+    codUsuario SERIAL,
+    valor INT
+);
+
+CREATE TABLE tbMISSAOCOMPLETA (
+    codMissaoCompleta SERIAL PRIMARY KEY,
+    codMissao SERIAL,
+    codUsuario SERIAL,
+    valor INT
+);
+
+CREATE TABLE tbMISSAO (
+    codMIssao SERIAL PRIMARY KEY,
+    nmMissao VARCHAR(50),
+    descricao VARCHAR(50),
+    valor INT
+);
+
+CREATE TABLE tbVIDEOCOMENTARIO (
+    codVideoComentario SERIAL PRIMARY KEY,
+    codVideoComentarioPai SERIAL,
+    codVideo SERIAL,
+    codUsuario SERIAL,
+    comentario VARCHAR(125)
+);
+
+CREATE TABLE tbVIDEO (
+    codVideo SERIAL PRIMARY KEY,
+    nmVideo VARCHAR(50),
+    linkVideo TEXT,
+    premium BOOL
+);
+ 
+ALTER TABLE tbHUMOR ADD CONSTRAINT FK_tbHUMOR_2
+    FOREIGN KEY (codUsuario)
+    REFERENCES tbUSUARIO (codUsuario);
+ 
+ALTER TABLE tbUSUARIO ADD CONSTRAINT FK_tbUSUARIO_3
+    FOREIGN KEY (codImgPerfil)
+    REFERENCES tbPERFIL (codImgPerfil);
+ 
+ALTER TABLE tbUSUARIO ADD CONSTRAINT FK_tbUSUARIO_4
+    FOREIGN KEY (codSkinPrincipal)
+    REFERENCES tbSKIN (codSkin);
+ 
+ALTER TABLE tbUSUARIOCLINICA ADD CONSTRAINT FK_tbUSUARIOCLINICA_tbUSUARIO
+    FOREIGN KEY (codUsuario)
+    REFERENCES tbUSUARIO (codUsuario);
+ 
+ALTER TABLE tbUSUARIOCLINICA ADD CONSTRAINT FK_tbUSUARIOCLINICA_tbCLINICA
+    FOREIGN KEY (codClinica)
+    REFERENCES tbCLINICA (codClinica);
+ 
+ALTER TABLE tbCOMPRASKIN ADD CONSTRAINT FK_tbCOMPRASKIN_2
+    FOREIGN KEY (codUsuario)
+    REFERENCES tbUSUARIO (codUsuario);
+ 
+ALTER TABLE tbCOMPRASKIN ADD CONSTRAINT FK_tbCOMPRASKIN_3
+    FOREIGN KEY (codSkin)
+    REFERENCES tbSKIN (codSkin);
+ 
+ALTER TABLE tbCOMPRAPERFIL ADD CONSTRAINT FK_tbCOMPRAPERFIL_2
+    FOREIGN KEY (codUsuario)
+    REFERENCES tbUSUARIO (codUsuario);
+ 
+ALTER TABLE tbCOMPRAPERFIL ADD CONSTRAINT FK_tbCOMPRAPERFIL_3
+    FOREIGN KEY (codImgPefil)
+    REFERENCES tbPERFIL (codImgPerfil);
+ 
+ALTER TABLE tbMISSAOCOMPLETA ADD CONSTRAINT FK_tbMISSAOCOMPLETA_2
+    FOREIGN KEY (codUsuario)
+    REFERENCES tbUSUARIO (codUsuario);
+ 
+ALTER TABLE tbMISSAOCOMPLETA ADD CONSTRAINT FK_tbMISSAOCOMPLETA_3
+    FOREIGN KEY (codMissao)
+    REFERENCES tbMISSAO (codMIssao);
+ 
+ALTER TABLE tbVIDEOCOMENTARIO ADD CONSTRAINT FK_tbVIDEOCOMENTARIO_2
+    FOREIGN KEY (codUsuario)
+    REFERENCES tbUSUARIO (codUsuario);
+ 
+ALTER TABLE tbVIDEOCOMENTARIO ADD CONSTRAINT FK_tbVIDEOCOMENTARIO_3
+    FOREIGN KEY (codVideoComentarioPai)
+    REFERENCES tbVIDEOCOMENTARIO (codVideoComentario);
